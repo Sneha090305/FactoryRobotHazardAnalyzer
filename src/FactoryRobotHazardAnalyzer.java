@@ -1,6 +1,23 @@
 import java.util.Scanner;
 
 public class FactoryRobotHazardAnalyzer {
+
+    public static double calculateHazardRisk(double armPrecision, int workerDensity, String machineryState) {
+
+        if (armPrecision < 0.0 || armPrecision > 1.0) {
+            System.out.println("Error: Arm precision must be 0.0-1.0");
+            return -1;
+        }
+
+        if (workerDensity < 1 || workerDensity > 20) {
+            System.out.println("Error: Worker density must be 1-20");
+            return -1;
+        }
+
+        double machineRiskFactor = 1.0; // placeholder (mapping comes later)
+        return ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -15,23 +32,11 @@ public class FactoryRobotHazardAnalyzer {
         System.out.println("Enter Machinery State (Worn/Faulty/Critical):");
         String machineryState = sc.nextLine();
 
-        // UC4: validation in main
-        if (armPrecision < 0.0 || armPrecision > 1.0) {
-            System.out.println("Error: Arm precision must be 0.0-1.0");
-            sc.close();
-            return;
+        double risk = calculateHazardRisk(armPrecision, workerDensity, machineryState);
+
+        if (risk != -1) {
+            System.out.println("Robot Hazard Risk Score: " + risk);
         }
-
-        if (workerDensity < 1 || workerDensity > 20) {
-            System.out.println("Error: Worker density must be 1-20");
-            sc.close();
-            return;
-        }
-
-        double machineRiskFactor = 1.0;
-        double riskScore = ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
-
-        System.out.println("Robot Hazard Risk Score: " + riskScore);
 
         sc.close();
     }
