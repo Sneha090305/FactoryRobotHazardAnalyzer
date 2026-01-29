@@ -13,7 +13,18 @@ public class FactoryRobotHazardAnalyzer {
             throw new RobotSafetyException("Error: Worker density must be 1-20");
         }
 
-        double machineRiskFactor = 1.0; // placeholder for now
+        double machineRiskFactor;
+
+        if ("Worn".equals(machineryState)) {
+            machineRiskFactor = 1.3;
+        } else if ("Faulty".equals(machineryState)) {
+            machineRiskFactor = 2.0;
+        } else if ("Critical".equals(machineryState)) {
+            machineRiskFactor = 3.0;
+        } else {
+            throw new RobotSafetyException("Error: Unsupported machinery state");
+        }
+// placeholder for now
         return ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
     }
 
