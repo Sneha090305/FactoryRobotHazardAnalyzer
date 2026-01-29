@@ -15,8 +15,20 @@ public class FactoryRobotHazardAnalyzer {
         System.out.println("Enter Machinery State (Worn/Faulty/Critical):");
         String machineryState = sc.nextLine();
 
-        // UC3: calculate risk score (no validation, no mapping yet)
-        double machineRiskFactor = 1.0; // placeholder for now
+        // UC4: validation in main
+        if (armPrecision < 0.0 || armPrecision > 1.0) {
+            System.out.println("Error: Arm precision must be 0.0-1.0");
+            sc.close();
+            return;
+        }
+
+        if (workerDensity < 1 || workerDensity > 20) {
+            System.out.println("Error: Worker density must be 1-20");
+            sc.close();
+            return;
+        }
+
+        double machineRiskFactor = 1.0;
         double riskScore = ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
 
         System.out.println("Robot Hazard Risk Score: " + riskScore);
